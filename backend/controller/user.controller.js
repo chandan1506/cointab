@@ -4,9 +4,9 @@ const fetch = require("node-fetch")
 //fetch and add users data in to database
 const getUserData = async(req,res)=>{
     try {
-        const response=await fetch("https://randomuser.me/api/?results=50")
+        const response=await fetch("https://randomuser.me/api/?datas=50")
         const data=await response.json()
-        const users = data.results
+        const users = data.datas
       
     for (const user of users) {
       await UserModel.create({
@@ -77,4 +77,46 @@ const deleteAllUsers = async (req, res) => {
 };
 
 
-module.exports={ getUserData, getAllUsers, deleteAllUsers }
+//pagination
+const userPagination = async (req,res)=>{
+  try {
+      let page=req.query.page||1
+
+      let data= await UserModel.findAndCountAll({limit:10,offset:(page-1)*10})
+
+      let payload={
+          currentPage:page,
+          pages:Math.ceil(data.count/10),
+          results:data.rows
+      }
+      res.status(200).json(payload)
+  } catch (error) {
+      console.log(error.message)
+      res.send({ error: "Internal Server Error" })
+  }
+}
+
+
+//filter
+const filter = async (req,res)=>{
+  try {
+      const { country, gender } = req.query;
+      
+      // Prepare the data based on the query parameters
+      const data = {};
+      if (gender) {
+          data.gender = gender;
+      }
+      if(country){
+          data.country=country
+      }
+
+      const response = await UserModel.findAll({ where: data });
+      res.status(200).json(response);
+  } catch (error) {
+      console.log(error.message)
+      res.send({ error: "Internal Server Error" })
+  }
+}
+
+module.exports={ getUserData, getAllUsers, deleteAllUsers, userPagination, filter }
