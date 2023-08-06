@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <link rel="stylesheet" href="./users.css">
+</head>
+<body>
+    <h1>User Details</h1>
+    <hr>
+    <p>All filters are optional.</p>
+    <br>
+    <form>
+        <label for="country">Enter country :- </label>
+        <input type="text" name="country" id="country" placeholder="Enter country name here" />
+        <input type="submit" id="submit" />
+    </form>
+        <br>
+        <br>
+        <Select id="gender">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </Select>
+    <br>
+      <button id="prev" disabled>Prev</button>
+      <span>1</span>
+      <button id="next">Next</button>
+    <hr>
+    <br>
+    <table>
+        <thead>
+            <th>Picture</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Age</th> 
+            <th>Email</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Street Number</th>
+            <th>Street Name</th>
+            <th>City</th>
+            <th>Country</th>
+        </thead>
+        <tbody>
+       <!-----append render data here------>
+        </tbody>
+    </table>
+    <h2 id="empty" style="display:none">No users available</h2>
+    <button id="back" onclick="window.location='./index.html'">Back To Home</button>
+</body>
+
+<script src="./users.js"></script>
+</html>

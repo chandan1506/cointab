@@ -4,9 +4,9 @@ const fetch = require("node-fetch")
 //fetch and add users data in to database
 const getUserData = async(req,res)=>{
     try {
-        const response=await fetch("https://randomuser.me/api/?datas=50")
+        const response=await fetch("https://randomuser.me/api/?results=50")
         const data=await response.json()
-        const users = data.datas
+        const users = data.results
       
     for (const user of users) {
       await UserModel.create({
@@ -53,15 +53,34 @@ const getUserData = async(req,res)=>{
 }
 
 
-// Retrieve all usersData from the database
+// Retrieve all usersData from the database with filteration and pagination
 const getAllUsers  = async (req, res) => {
   try {
-    const users = await UserModel.findAll();
-    res.status(200).json(users);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ error: 'An error occurred while retrieving users.' });
+    const { country, gender } = req.query;
+    
+    let page = req.query.page||1
+
+    // Prepare the data based on the query parameters
+    const filData = {};
+    if (gender) {
+      filData .gender = gender;
+    }
+    if(country){
+      filData .country=country
+    }
+
+    const response = await UserModel.findAndCountAll({ where: filData,limit:10,offset:(page-1)*10 });
+
+    let payload={
+      currentPage:page,
+      pages:Math.ceil(response.count/10),
+      results:response.rows
   }
+    res.status(200).json(payload);
+} catch (error) {
+    console.log(error.message)
+    res.send({ error: "Internal Server Error" })
+}
 };
 
 
@@ -77,46 +96,5 @@ const deleteAllUsers = async (req, res) => {
 };
 
 
-//pagination
-const userPagination = async (req,res)=>{
-  try {
-      let page=req.query.page||1
 
-      let data= await UserModel.findAndCountAll({limit:10,offset:(page-1)*10})
-
-      let payload={
-          currentPage:page,
-          pages:Math.ceil(data.count/10),
-          results:data.rows
-      }
-      res.status(200).json(payload)
-  } catch (error) {
-      console.log(error.message)
-      res.send({ error: "Internal Server Error" })
-  }
-}
-
-
-//filter
-const filter = async (req,res)=>{
-  try {
-      const { country, gender } = req.query;
-      
-      // Prepare the data based on the query parameters
-      const data = {};
-      if (gender) {
-          data.gender = gender;
-      }
-      if(country){
-          data.country=country
-      }
-
-      const response = await UserModel.findAll({ where: data });
-      res.status(200).json(response);
-  } catch (error) {
-      console.log(error.message)
-      res.send({ error: "Internal Server Error" })
-  }
-}
-
-module.exports={ getUserData, getAllUsers, deleteAllUsers, userPagination, filter }
+module.exports={ getUserData, getAllUsers, deleteAllUsers }
