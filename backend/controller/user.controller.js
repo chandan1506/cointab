@@ -56,20 +56,20 @@ const getUserData = async(req,res)=>{
 // Retrieve all usersData from the database with filteration and pagination
 const getAllUsers  = async (req, res) => {
   try {
-    const { country, gender } = req.query;
+    const { title, gender } = req.query;
     
-    let page = req.query.page||1
+    let page = req.query.page || 1
 
     // Prepare the data based on the query parameters
-    const filData = {};
+    const obj = {};
     if (gender) {
-      filData .gender = gender;
+      obj.gender = gender;
     }
-    if(country){
-      filData .country=country
+    if(title){
+      obj.title=title
     }
 
-    const response = await UserModel.findAndCountAll({ where: filData,limit:10,offset:(page-1)*10 });
+    const response = await UserModel.findAndCountAll({ where: obj,limit:10,offset:(page-1)*10 });
 
     let payload={
       currentPage:page,

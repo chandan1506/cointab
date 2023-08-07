@@ -24,7 +24,7 @@
                     <td>${user.street_number}</td>
                     <td>${user.street_name}</td>
                     <td>${user.city}</td>
-                    <td>${user.country}</td>
+                    <td>${user.title}</td>
                     
                 </tr>`  
             
@@ -35,15 +35,15 @@
     RenderUsers()
 
 
-       //filter  users data by country
+       //filter  users data by title
  let form = document.querySelector("form")
 
  form.addEventListener("submit",(e)=>{
        e.preventDefault()
       
        let query = "?"
-       let value = e.target.country.value
-        query+=`country=${value}`
+       let value = e.target.title.value
+        query+=`title=${value}`
         // console.log(query)
          RenderUsers(query)
        
