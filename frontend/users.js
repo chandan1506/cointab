@@ -14,6 +14,7 @@
         const res = data.map((user)=>{
             return `<tr>
                     <td><img src="${user.picture_thumbnail}"/></td>
+                    <td>${user.title}</td>
                     <td>${user.first_name}</td>
                     <td>${user.last_name}</td>
                     <td>${user.gender}</td>
@@ -24,7 +25,6 @@
                     <td>${user.street_number}</td>
                     <td>${user.street_name}</td>
                     <td>${user.city}</td>
-                    <td>${user.title}</td>
                     
                 </tr>`  
             
