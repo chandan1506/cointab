@@ -14,6 +14,10 @@ Link:- <a href="https://drive.google.com/file/d/1Tb11QrfaW9Zy1qR39lw-Wai2-8i1RUJ
 - search users data by country
 - filter users data by gender
 
+## Demo
+<img align = "left" src="https://www.linkpicture.com/q/Screenshot-141_1.png">
+<img  align = "left" src="https://www.linkpicture.com/q/Screenshot-142_2.png" >
+
 ## Installation & Getting started
 
 ```bash
