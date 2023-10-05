@@ -40,8 +40,8 @@ const UserModel = sequelize.define('random_users', {
   });
   
 
-// to sync users table with cointab db
-sequelize.sync()
+// to sync users table with cointab db (optional)
+ sequelize.sync()
 
 
 //exporting UserModel

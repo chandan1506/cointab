@@ -1,6 +1,7 @@
 const UserModel = require("../model/UserModel")
 const fetch = require("node-fetch")
-
+const { Op } = require("sequelize")
+//console.log(Op)
 //fetch and add users data in to database
 const getUserData = async(req,res)=>{
     try {
@@ -96,5 +97,14 @@ const deleteAllUsers = async (req, res) => {
 };
 
 
+const getFilteredData = async (req,res)=>{
+        try {
+          const response = await UserModel.findAll({where:{first_name:{[Op.like]:"R%"}}})
+          res.status(200).json(response);
+        } catch (error) {
+          console.error(error.message);
+        res.status(500).json({ error: 'An error occurred while fetching users.' });
+        }
+}
 
-module.exports={ getUserData, getAllUsers, deleteAllUsers }
+module.exports={ getUserData, getAllUsers, deleteAllUsers, getFilteredData }

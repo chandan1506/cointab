@@ -8,9 +8,9 @@ const Sequelize = require("sequelize")
 const sequelize =  new Sequelize("cointab","root",process.env.password,{host:"localhost",dialect:"mysql"})
 
 //verifying connection is successfull or not
-sequelize.authenticate()
-.then(()=>console.log("connection is successfull"))
-.catch((error)=>console.log(error.message))
+// sequelize.authenticate()
+// .then(()=>console.log("connection is successfull"))
+// .catch((error)=>console.log(error.message))
 
 
 //exporting connection

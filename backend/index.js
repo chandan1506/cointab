@@ -8,7 +8,7 @@ require('dotenv').config()
 const Port = process.env.port
 
        //sequelize
-require("./config/db")    
+const sequelize = require("./config/db")    
 
        //cors
 const cors = require("cors")  
@@ -24,11 +24,12 @@ app.get("/",(req,res)=>{
 })
 
 //estblishing connection
-app.listen(Port,()=>{
+app.listen(Port,async ()=>{
     try {
-        console.log(`server is running on ${Port}`)
+        await sequelize
+        console.log("DB is connected")
     } catch (error) {
         console.log(error.message)
     }
-    
+    console.log(`server is running on ${Port}`)
 })
